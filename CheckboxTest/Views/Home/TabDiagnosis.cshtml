@@ -1,0 +1,28 @@
+﻿@model int
+<script type="text/javascript">
+    var episodeid = @Model;
+    var allergyRefreshUrl =
+        '@Url.Action("Edit", "Home", new { id = Model, isReadOnly = (bool)ViewBag.IsReadOnly })';
+</script>
+
+<div class="row">
+    <div class="col">
+        <div class="internal-groupbox" id="allergyHistoryDiv">
+            @Html.Action("Edit", "Home", new { id = Model, isReadOnly = (bool)ViewBag.IsReadOnly })
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function toastNotify(e) {
+
+        if (!ajaxIsActive) return;
+        ajaxIsActive = false;
+        var inErrorItems = $("form").find(".dx-invalid").length;
+
+        if (inErrorItems && inErrorItems > 0) {
+            DevExpress.ui.notify("Errors found", "error", 2000);
+        } else {
+            DevExpress.ui.notify("Update successful", "success", 2000);
+        }
+    }
+</script>

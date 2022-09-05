@@ -1,0 +1,37 @@
+@using CheckboxTest.Models
+@model CheckboxTest.Models.EditAllergiesModel
+@{
+    ViewBag.IsReadOnly = Model.IsReadOnly;
+    ViewBag.IsEditingAllowed = !Model.IsReadOnly;
+}
+<div id="divAllergyCheck">
+    @{
+        ViewBag.IsReadOnly = Model.IsReadOnly;
+        ViewBag.IsEditingAllowed = !Model.IsReadOnly;
+        using (Ajax.BeginForm("Edit", new { id = Model.PatientId }, new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "divAllergyCheck", InsertionMode = InsertionMode.ReplaceWith }, new { @id = "editallergyForm" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.EpisodeId)
+
+            @(Html.DevExtreme().Form<EditAllergiesModel>()
+                                              .FormData(Model)
+                                              .ReadOnly(Model.IsReadOnly)
+                                              .MinColWidth(300)
+                                              .LabelLocation(FormLabelLocation.Left)
+                                              .ShowColonAfterLabel(false)
+                                              .ShowRequiredMark(true)
+                                              .ShowValidationSummary(true)
+                                              .ColCount(1)
+                                              .Items(o =>
+                                              {
+                                                  o.AddSimpleFor(e => e.HasNoKnownDrugAllergies);
+                                                  o.AddButton().ButtonOptions(d => d.UseSubmitBehavior(true).Text("Submit"));
+
+                                              })
+                                              .OnFieldDataChanged("function(e) { console.log(e.dataField + ':' + e.value); $('#editallergyForm').submit(); }")
+                                              .OnContentReady("toastNotify")
+                )
+        }
+
+    }
+</div>

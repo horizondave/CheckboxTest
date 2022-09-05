@@ -1,0 +1,30 @@
+﻿@model int
+@{
+    ViewBag.Title = "Index";
+    ViewBag.IsReadOnly = false;
+    ViewBag.IsEditingAllowed = true;
+}
+<ul>
+    <li />
+    @Html.ActionLink("Document Viewer", "Viewer", "Home")
+</ul>
+
+
+@Html.Partial("TabDiagnosis", 123)
+
+@*<div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                @(Html.DevExtreme().TabPanel()
+                              .ID("episodeTabs")
+                              .Loop(true)
+                              .DeferRendering(true)
+                              .SwipeEnabled(true)
+                              .Items(t =>
+                              {
+                                t.Add().Title("Diagnosis and Medical History").Template(@<text>@Html.Partial("TabDiagnosis", 123)</text>);
+                            }))
+            </div>
+        </div>
+    </div>*@
+
